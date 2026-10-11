@@ -2,6 +2,9 @@
 // Gemini Multimodal AI Studio - Frontend Logic
 // ==========================================================
 
+
+const API_BASE ='https://backend-chatbot-tan.vercel.app'
+
 // DOM Elements
 const chatBox = document.getElementById('chat-box');
 const chatContainer = document.getElementById('chat-container');
@@ -466,7 +469,7 @@ async function handleFormSubmit(e) {
       formData.append('image', attachment.file);
       formData.append('prompt', textMessage || 'Jelaskan dan analisis gambar ini secara detail.');
 
-      const response = await fetch('/generate-from-image', {
+      const response = await fetch(`${API_BASE}/generate-from-image`, {
         method: 'POST',
         body: formData,
       });
@@ -481,7 +484,7 @@ async function handleFormSubmit(e) {
       formData.append('document', attachment.file);
       formData.append('prompt', textMessage || 'Tolong ringkas dan jelaskan isi dokumen ini.');
 
-      const response = await fetch('/generate-from-document', {
+      const response = await fetch(`${API_BASE}/generate-from-document`, {
         method: 'POST',
         body: formData,
       });
@@ -496,7 +499,7 @@ async function handleFormSubmit(e) {
       formData.append('audio', attachment.file);
       formData.append('prompt', textMessage || 'Tolong dengarkan rekaman suara ini, buatkan transkrip ringkas dan tanggapi isinya.');
 
-      const response = await fetch('/generate-from-audio', {
+      const response = await fetch(`${API_BASE}/generate-from-audio`, {
         method: 'POST',
         body: formData,
       });
@@ -509,7 +512,7 @@ async function handleFormSubmit(e) {
       // Pure Text Chat -> Endpoint: /api-chat
       conversation.push({ role: 'user', text: textMessage });
 
-      const response = await fetch('/api-chat', {
+      const response = await fetch(`${API_BASE}/api-chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ conversation }),
