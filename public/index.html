@@ -3,99 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gemini Multimodal AI Studio</title>
-  <meta name="description" content="AI Chatbot multimodal canggih dengan dukungan teks, gambar, dokumen, audio, dan voice note." />
-  <!-- Google Fonts -->
+  <title>Gemini Studio</title>
+  <meta name="description" content="Minimalist Multimodal AI Workspace powered by Gemini." />
+  
+  <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="app-layout">
-    <!-- LEFT SIDE: Sidebar Panel -->
+    <!-- LEFT SIDEBAR -->
     <aside class="app-sidebar" id="app-sidebar">
       <div class="sidebar-header">
         <div class="sidebar-title">
-          <div class="brand-avatar-mini">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-            </svg>
-          </div>
+          <i data-lucide="bot" class="sidebar-icon"></i>
           <span>Gemini Studio</span>
         </div>
-        <button id="btn-close-sidebar" class="btn-icon sidebar-close-btn" title="Tutup Panel">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        <button id="btn-close-sidebar" class="btn-icon sidebar-close-btn" title="Tutup sidebar" aria-label="Tutup sidebar">
+          <i data-lucide="x"></i>
         </button>
       </div>
 
       <div class="sidebar-content">
-        <!-- Section 1: Engine Details -->
+        <!-- Model Info Section -->
         <div class="sidebar-section">
-          <div class="section-label">ENGINE & MODEL</div>
+          <div class="section-label">Model</div>
           <div class="model-badge-card">
             <div class="model-card-top">
               <span class="model-pill">Gemini 3.5 Flash Lite</span>
-              <span class="model-tag-active">AKTIF</span>
+              <span class="model-tag-active">Aktif</span>
             </div>
-            <p class="model-desc">Model generasi terbaru Google dengan latensi super rendah dan kapabilitas multimodal terpadu.</p>
-            <div class="capability-tags">
-              <span class="cap-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3-3-9 9"/></svg> Vision</span>
-              <span class="cap-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/></svg> Dokumen</span>
-              <span class="cap-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg> Audio</span>
-              <span class="cap-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Chat</span>
-            </div>
+            <p class="model-desc">Multimodal engine untuk teks, gambar, dokumen &amp; audio.</p>
           </div>
         </div>
 
-        <!-- Section 2: Quick Multimodal Actions -->
+        <!-- Quick Actions -->
         <div class="sidebar-section">
-          <div class="section-label">AKSI CEPAT MULTIMODAL</div>
+          <div class="section-label">Aksi Cepat</div>
           <div class="quick-action-list">
             <button class="quick-action-btn" id="side-action-image">
-              <div class="action-btn-icon bg-indigo">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3-3-9 9"/></svg>
-              </div>
+              <i data-lucide="image" class="action-btn-icon"></i>
               <div class="action-btn-text">
-                <span class="action-btn-title">Unggah Foto / Screenshot</span>
-                <span class="action-btn-sub">Analisis objek & OCR teks</span>
+                <span class="action-btn-title">Unggah Foto / Gambar</span>
+                <span class="action-btn-sub">Analisis objek &amp; OCR</span>
               </div>
             </button>
 
             <button class="quick-action-btn" id="side-action-doc">
-              <div class="action-btn-icon bg-blue">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
-              </div>
+              <i data-lucide="file-text" class="action-btn-icon"></i>
               <div class="action-btn-text">
                 <span class="action-btn-title">Analisis Dokumen PDF</span>
-                <span class="action-btn-sub">Ringkas isi file panjang</span>
+                <span class="action-btn-sub">Ringkas isi dokumen</span>
               </div>
             </button>
 
             <button class="quick-action-btn" id="side-action-voice">
-              <div class="action-btn-icon bg-rose">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
-              </div>
+              <i data-lucide="mic" class="action-btn-icon"></i>
               <div class="action-btn-text">
                 <span class="action-btn-title">Rekam Voice Note</span>
-                <span class="action-btn-sub">Bicara langsung via mikrofon</span>
+                <span class="action-btn-sub">Transkrip audio langsung</span>
               </div>
             </button>
           </div>
         </div>
 
-        <!-- Section 3: Session Attachments Vault -->
-        <div class="sidebar-section">
-          <div class="section-label">LAMPIRAN SESI INI</div>
+        <!-- Session Attachments -->
+        <div class="sidebar-section session-section">
+          <div class="section-label">Lampiran Sesi</div>
           <div id="session-attachments-list" class="session-attachments-empty">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"/></svg>
+            <i data-lucide="paperclip" class="empty-icon"></i>
             <span>Belum ada lampiran di sesi ini</span>
           </div>
         </div>
 
-        <!-- Section 4: Session Stats & Tools -->
-        <div class="sidebar-section">
-          <div class="section-label">STATISTIK & KONTROL</div>
+        <!-- Session Stats & Controls -->
+        <div class="sidebar-section stats-section">
+          <div class="section-label">Sesi &amp; Kontrol</div>
           <div class="stats-grid">
             <div class="stat-card">
               <span class="stat-value" id="stat-message-count">0</span>
@@ -108,11 +97,11 @@
           </div>
           <div class="sidebar-tools">
             <button id="btn-export-chat" class="tool-btn" title="Unduh Catatan Chat">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <i data-lucide="download"></i>
               <span>Ekspor Percakapan</span>
             </button>
             <button id="btn-side-clear" class="tool-btn danger" title="Reset Percakapan">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+              <i data-lucide="trash-2"></i>
               <span>Reset Sesi Chat</span>
             </button>
           </div>
@@ -120,40 +109,34 @@
       </div>
 
       <div class="sidebar-footer">
-        <span>Google GenAI • Multimodal Studio v1.2</span>
+        <span>Gemini 3.5 Flash Lite • Minimalist Workspace</span>
       </div>
     </aside>
 
-    <!-- RIGHT SIDE: Full Chatbox Container -->
+    <!-- MAIN CHAT AREA -->
     <div class="main-chat-area">
-      <!-- Chat Header -->
+      <!-- Minimalist Header -->
       <header class="app-header">
         <div class="header-left">
-          <button id="btn-toggle-sidebar" class="btn-icon" title="Buka/Tutup Sidebar" aria-label="Toggle Sidebar">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>
-            </svg>
+          <button id="btn-toggle-sidebar" class="btn-icon" title="Toggle Sidebar" aria-label="Toggle Sidebar">
+            <i data-lucide="panel-left"></i>
           </button>
           <div class="header-brand">
             <div class="brand-avatar">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-              </svg>
+              <i data-lucide="bot"></i>
             </div>
             <div>
-              <h1 class="brand-title">Gemini AI Studio</h1>
+              <h1 class="brand-title">Gemini Studio</h1>
               <div class="brand-status">
                 <span class="status-dot"></span>
-                <span class="status-text">Online • gemini-3.5-flash-lite</span>
+                <span class="status-text">gemini-3.5-flash-lite</span>
               </div>
             </div>
           </div>
         </div>
         <div class="header-actions">
           <button id="btn-clear" class="btn-icon" title="Bersihkan Percakapan" aria-label="Bersihkan Percakapan">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-            </svg>
+            <i data-lucide="rotate-ccw"></i>
           </button>
         </div>
       </header>
@@ -161,110 +144,104 @@
       <!-- Chat Messages Container -->
       <main class="chat-container" id="chat-container">
         <div id="chat-box" class="chat-box">
-          <!-- Welcome Screen -->
+          <!-- Welcome Screen (Clean Minimalist, No AI Slop) -->
           <div class="welcome-card" id="welcome-card">
-            <div class="welcome-icon">✨</div>
-            <h2>Halo! Ada yang bisa saya bantu hari ini?</h2>
-            <p>Anda bisa bertanya melalui teks, mengunggah foto, dokumen, rekaman audio, atau mengirimkan voice note langsung.</p>
+            <div class="welcome-icon-box">
+              <i data-lucide="message-square" class="welcome-hero-icon"></i>
+            </div>
+            <h2>Bagaimana saya bisa membantu Anda?</h2>
+            <p>Mulai percakapan teks, unggah gambar atau dokumen, atau rekam voice note langsung.</p>
             
             <div class="suggestion-grid">
               <button class="suggestion-chip" id="chip-image">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                <i data-lucide="image"></i>
                 <span>Analisis Foto / Gambar</span>
               </button>
               <button class="suggestion-chip" id="chip-doc">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                <i data-lucide="file-text"></i>
                 <span>Ringkas Dokumen PDF</span>
               </button>
               <button class="suggestion-chip" id="chip-voice">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                <i data-lucide="mic"></i>
                 <span>Rekam Voice Note</span>
               </button>
               <button class="suggestion-chip" id="chip-chat">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <span>Diskusi Ide & Kreativitas</span>
+                <i data-lucide="sparkles"></i>
+                <span>Diskusi Ide &amp; Kreativitas</span>
               </button>
             </div>
           </div>
         </div>
       </main>
 
-      <!-- Bottom Input & Attachment Bar -->
+      <!-- Bottom Floating Dock -->
       <footer class="app-footer">
-        <!-- Attachment Preview Drawer -->
-        <div id="attachment-preview" class="attachment-preview-bar hidden">
-          <div class="attachment-info">
-            <div class="attachment-thumb" id="preview-thumb"></div>
-            <div class="attachment-details">
-              <span class="attachment-type" id="preview-type">Lampiran</span>
-              <span class="attachment-name" id="preview-name">file.ext</span>
+        <div class="dock-container">
+          <!-- Attachment Preview Drawer -->
+          <div id="attachment-preview" class="attachment-preview-bar hidden">
+            <div class="attachment-info">
+              <div class="attachment-thumb" id="preview-thumb"></div>
+              <div class="attachment-details">
+                <span class="attachment-type" id="preview-type">Lampiran</span>
+                <span class="attachment-name" id="preview-name">file.ext</span>
+              </div>
+            </div>
+            <button type="button" id="btn-remove-attachment" class="btn-remove-preview" title="Hapus lampiran" aria-label="Hapus lampiran">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+
+          <!-- Live Voice Recording Bar -->
+          <div id="recording-bar" class="recording-bar hidden">
+            <div class="recording-status">
+              <span class="recording-pulse"></span>
+              <span class="recording-label">Merekam Voice Note</span>
+              <span class="recording-timer" id="recording-timer">00:00</span>
+            </div>
+            <div class="recording-actions">
+              <button type="button" id="btn-cancel-record" class="btn-record-cancel">Batal</button>
+              <button type="button" id="btn-stop-record" class="btn-record-done">
+                <i data-lucide="square"></i>
+                <span>Selesai</span>
+              </button>
             </div>
           </div>
-          <button type="button" id="btn-remove-attachment" class="btn-remove-preview" title="Hapus lampiran" aria-label="Hapus lampiran">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          </button>
+
+          <!-- Main Input Form -->
+          <form id="chat-form" class="chat-form">
+            <!-- Hidden File Inputs -->
+            <input type="file" id="image-input" accept="image/*" class="hidden-input" />
+            <input type="file" id="doc-input" accept=".pdf,.doc,.docx,.txt,.csv,.json,.md" class="hidden-input" />
+            <input type="file" id="audio-input" accept="audio/*" class="hidden-input" />
+
+            <!-- Media Attachment Buttons -->
+            <div class="attachment-triggers">
+              <button type="button" id="btn-trigger-image" class="btn-action" title="Unggah Foto / Gambar" aria-label="Unggah Foto">
+                <i data-lucide="image"></i>
+              </button>
+              <button type="button" id="btn-trigger-doc" class="btn-action" title="Unggah Dokumen" aria-label="Unggah Dokumen">
+                <i data-lucide="file-text"></i>
+              </button>
+              <button type="button" id="btn-trigger-audio" class="btn-action" title="Unggah File Audio" aria-label="Unggah Audio">
+                <i data-lucide="music"></i>
+              </button>
+              <button type="button" id="btn-trigger-mic" class="btn-action btn-mic" title="Rekam Suara" aria-label="Rekam Suara">
+                <i data-lucide="mic"></i>
+              </button>
+            </div>
+
+            <!-- Text Input Area -->
+            <div class="input-wrapper">
+              <textarea id="user-input" rows="1" placeholder="Ketik pesan atau lampirkan berkas..." autocomplete="off"></textarea>
+            </div>
+
+            <!-- Send Button -->
+            <button type="submit" id="btn-send" class="btn-send" title="Kirim Pesan" aria-label="Kirim Pesan">
+              <i data-lucide="arrow-up"></i>
+            </button>
+          </form>
         </div>
-
-        <!-- Live Voice Recording Bar -->
-        <div id="recording-bar" class="recording-bar hidden">
-          <div class="recording-status">
-            <span class="recording-pulse"></span>
-            <span class="recording-label">Merekam Voice Note...</span>
-            <span class="recording-timer" id="recording-timer">00:00</span>
-          </div>
-          <div class="recording-actions">
-            <button type="button" id="btn-cancel-record" class="btn-record-cancel">Batal</button>
-            <button type="button" id="btn-stop-record" class="btn-record-done">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-              Selesai
-            </button>
-          </div>
-        </div>
-
-        <!-- Main Input Form -->
-        <form id="chat-form" class="chat-form">
-          <!-- Hidden File Inputs -->
-          <input type="file" id="image-input" accept="image/*" class="hidden-input" />
-          <input type="file" id="doc-input" accept=".pdf,.doc,.docx,.txt,.csv,.json,.md" class="hidden-input" />
-          <input type="file" id="audio-input" accept="audio/*" class="hidden-input" />
-
-          <!-- Media Attachment Buttons -->
-          <div class="attachment-triggers">
-            <button type="button" id="btn-trigger-image" class="btn-action" title="Unggah Foto / Gambar" aria-label="Unggah Foto">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-              </svg>
-            </button>
-            <button type="button" id="btn-trigger-doc" class="btn-action" title="Unggah Dokumen (PDF, DOCX, TXT)" aria-label="Unggah Dokumen">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>
-              </svg>
-            </button>
-            <button type="button" id="btn-trigger-audio" class="btn-action" title="Unggah File Audio" aria-label="Unggah File Audio">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-              </svg>
-            </button>
-            <button type="button" id="btn-trigger-mic" class="btn-action btn-mic" title="Rekam Suara (Voice Note)" aria-label="Rekam Suara">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Text Input Area -->
-          <div class="input-wrapper">
-            <textarea id="user-input" rows="1" placeholder="Ketik pesan atau lampirkan foto/dokumen/audio..." autocomplete="off"></textarea>
-          </div>
-
-          <!-- Send Button -->
-          <button type="submit" id="btn-send" class="btn-send" title="Kirim Pesan" aria-label="Kirim Pesan">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
-            </svg>
-          </button>
-        </form>
-        <div class="input-caption">Tekan Enter untuk mengirim, Shift + Enter untuk baris baru. Mendukung Multimodal Gemini.</div>
+        <div class="input-caption">Tekan Enter untuk mengirim &bull; Shift + Enter untuk baris baru</div>
       </footer>
     </div>
   </div>
@@ -274,7 +251,9 @@
     <div class="modal-backdrop"></div>
     <div class="modal-content">
       <img id="modal-img" src="" alt="Enlarged preview" />
-      <button id="modal-close" class="modal-close" aria-label="Tutup">&times;</button>
+      <button id="modal-close" class="modal-close" aria-label="Tutup">
+        <i data-lucide="x"></i>
+      </button>
     </div>
   </div>
 

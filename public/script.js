@@ -1,9 +1,9 @@
 // ==========================================================
 // Gemini Multimodal AI Studio - Frontend Logic
+// Minimalist, Clean, Non-AI-Slop Experience
 // ==========================================================
 
-
-const API_BASE ='https://backend-chatbot-tan.vercel.app'
+const API_BASE = 'https://backend-chatbot-tan.vercel.app';
 
 // DOM Elements
 const chatBox = document.getElementById('chat-box');
@@ -73,11 +73,19 @@ let totalMessages = 0;
 let totalAttachments = 0;
 const sessionVault = []; // { type, name, url }
 
+// Safe icon refresher for dynamic elements
+function refreshIcons() {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
   autoResizeTextarea();
   updateStats();
+  refreshIcons();
 });
 
 function setupEventListeners() {
@@ -106,7 +114,7 @@ function setupEventListeners() {
   // Sidebar Controls
   if (btnToggleSidebar) {
     btnToggleSidebar.addEventListener('click', () => {
-      if (window.innerWidth <= 900) {
+      if (window.innerWidth <= 860) {
         appSidebar.classList.toggle('open-mobile');
       } else {
         appSidebar.classList.toggle('collapsed');
@@ -116,7 +124,11 @@ function setupEventListeners() {
 
   if (btnCloseSidebar) {
     btnCloseSidebar.addEventListener('click', () => {
-      appSidebar.classList.remove('open-mobile');
+      if (window.innerWidth <= 860) {
+        appSidebar.classList.remove('open-mobile');
+      } else {
+        appSidebar.classList.add('collapsed');
+      }
     });
   }
 
@@ -131,7 +143,7 @@ function setupEventListeners() {
   // Form submit
   chatForm.addEventListener('submit', handleFormSubmit);
 
-  // Keyboard shortcut in textarea: Enter to send, Shift+Enter for new line
+  // Keyboard shortcut: Enter to send, Shift+Enter for new line
   userInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -155,7 +167,7 @@ function setupEventListeners() {
   if (chipVoice) chipVoice.addEventListener('click', startVoiceRecording);
   if (chipChat) {
     chipChat.addEventListener('click', () => {
-      userInput.value = 'Ceritakan ide kreatif untuk proyek teknologi terbaru.';
+      userInput.value = 'Bagikan ide inovatif dan minimalis untuk proyek web modern.';
       userInput.focus();
       autoResizeTextarea();
     });
@@ -163,7 +175,8 @@ function setupEventListeners() {
 
   // Paste image from clipboard support (Ctrl+V)
   window.addEventListener('paste', (e) => {
-    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items;
+    if (!items) return;
     for (const item of items) {
       if (item.type.indexOf('image') === 0) {
         const blob = item.getAsFile();
@@ -193,7 +206,7 @@ function setupEventListeners() {
 // Auto-expand textarea
 function autoResizeTextarea() {
   userInput.style.height = 'auto';
-  userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+  userInput.style.height = Math.min(userInput.scrollHeight, 140) + 'px';
 }
 
 // Format file size
@@ -223,23 +236,21 @@ function handleFileSelect(file, type) {
   previewName.textContent = `${currentAttachment.name} (${formatBytes(currentAttachment.size)})`;
 
   if (type === 'image') {
-    previewType.textContent = 'FOTO / GAMBAR';
+    previewType.textContent = 'Gambar';
     previewThumb.innerHTML = `<img src="${previewUrl}" alt="Preview" />`;
   } else if (type === 'doc') {
-    previewType.textContent = 'DOKUMEN';
-    previewThumb.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>`;
+    previewType.textContent = 'Dokumen';
+    previewThumb.innerHTML = `<i data-lucide="file-text"></i>`;
   } else if (type === 'audio') {
-    previewType.textContent = 'AUDIO / SUARA';
-    previewThumb.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+    previewType.textContent = 'Audio';
+    previewThumb.innerHTML = `<i data-lucide="music"></i>`;
   }
 
+  refreshIcons();
   userInput.focus();
 }
 
 function clearAttachment() {
-  if (currentAttachment && currentAttachment.previewUrl) {
-    // Note: Don't revoke URL immediately if it's stored in session vault
-  }
   currentAttachment = null;
   attachmentPreview.classList.add('hidden');
   previewThumb.innerHTML = '';
@@ -270,17 +281,18 @@ function addToSessionVault(attachment) {
       item.addEventListener('click', () => openImageLightbox(attachment.previewUrl));
     } else if (attachment.type === 'doc') {
       item.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        <i data-lucide="file-text"></i>
         <span class="vault-item-name">${escapeHtml(attachment.name)}</span>
       `;
     } else if (attachment.type === 'audio') {
       item.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+        <i data-lucide="music"></i>
         <span class="vault-item-name">${escapeHtml(attachment.name)}</span>
       `;
     }
 
     sessionAttachmentsList.prepend(item);
+    refreshIcons();
   }
 }
 
@@ -301,7 +313,6 @@ async function startVoiceRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
     
-    // Tentukan mimeType yang disupport
     let options = {};
     if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
       options = { mimeType: 'audio/webm;codecs=opus' };
@@ -388,9 +399,10 @@ function resetChat() {
   if (sessionAttachmentsList) {
     sessionAttachmentsList.className = 'session-attachments-empty';
     sessionAttachmentsList.innerHTML = `
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"/></svg>
+      <i data-lucide="paperclip" class="empty-icon"></i>
       <span>Belum ada lampiran di sesi ini</span>
     `;
+    refreshIcons();
   }
 
   chatBox.innerHTML = '';
@@ -409,9 +421,9 @@ function exportChatTranscript() {
     return;
   }
 
-  let textContent = `=== CATATAN PERCAKAPAN GEMINI AI STUDIO ===\nTanggal: ${new Date().toLocaleString('id-ID')}\n\n`;
-  conversation.forEach((msg, idx) => {
-    const sender = msg.role === 'user' ? 'PENGGUNA' : 'GEMINI AI';
+  let textContent = `=== CATATAN PERCAKAPAN GEMINI STUDIO ===\nTanggal: ${new Date().toLocaleString('id-ID')}\n\n`;
+  conversation.forEach((msg) => {
+    const sender = msg.role === 'user' ? 'PENGGUNA' : 'GEMINI';
     textContent += `[${sender}]:\n${msg.text}\n\n----------------------------------------\n\n`;
   });
 
@@ -464,7 +476,6 @@ async function handleFormSubmit(e) {
 
     // Route ke endpoint yang sesuai
     if (attachment && attachment.type === 'image') {
-      // Endpoint: /generate-from-image
       const formData = new FormData();
       formData.append('image', attachment.file);
       formData.append('prompt', textMessage || 'Jelaskan dan analisis gambar ini secara detail.');
@@ -479,7 +490,6 @@ async function handleFormSubmit(e) {
       resultText = data.output;
 
     } else if (attachment && attachment.type === 'doc') {
-      // Endpoint: /generate-from-document
       const formData = new FormData();
       formData.append('document', attachment.file);
       formData.append('prompt', textMessage || 'Tolong ringkas dan jelaskan isi dokumen ini.');
@@ -494,7 +504,6 @@ async function handleFormSubmit(e) {
       resultText = data.output;
 
     } else if (attachment && attachment.type === 'audio') {
-      // Endpoint: /generate-from-audio (Sound & Voice Note)
       const formData = new FormData();
       formData.append('audio', attachment.file);
       formData.append('prompt', textMessage || 'Tolong dengarkan rekaman suara ini, buatkan transkrip ringkas dan tanggapi isinya.');
@@ -592,7 +601,7 @@ function appendUserMessage(text, attachment) {
       const docChip = document.createElement('div');
       docChip.className = 'attachment-doc-chip';
       docChip.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        <i data-lucide="file-text"></i>
         <span>${escapeHtml(attachment.name)}</span>
       `;
       attachContainer.appendChild(docChip);
@@ -617,6 +626,7 @@ function appendUserMessage(text, attachment) {
   row.appendChild(avatar);
   row.appendChild(bubble);
   chatBox.appendChild(row);
+  refreshIcons();
   scrollToBottom();
 }
 
@@ -627,11 +637,7 @@ function appendLoadingBotMessage() {
 
   const avatar = document.createElement('div');
   avatar.className = 'message-avatar';
-  avatar.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-    </svg>
-  `;
+  avatar.innerHTML = `<i data-lucide="bot"></i>`;
 
   const bubble = document.createElement('div');
   bubble.className = 'message-bubble';
@@ -646,6 +652,7 @@ function appendLoadingBotMessage() {
   row.appendChild(avatar);
   row.appendChild(bubble);
   chatBox.appendChild(row);
+  refreshIcons();
   scrollToBottom();
 
   return { row, bubble };
@@ -659,6 +666,7 @@ function updateBotMessage({ row, bubble }, text, isError = false) {
   } else {
     bubble.innerHTML = formatMarkdown(text);
   }
+  refreshIcons();
   scrollToBottom();
 }
 
